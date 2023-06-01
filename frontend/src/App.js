@@ -2,27 +2,25 @@ import "./App.css";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import HomePage from "./Page/HomePage";
 import LoginPage from "./Page/LoginPage";
-import NavBar from "./Components/NavBar";
-import PriviteRoute from "./Utils/PriviteRoute";
 import { AuthProvider } from "./Contex/AuthContex";
+import CentersPage from "./Page/CentersPage";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <AuthProvider>
-          <NavBar />
           <Routes>
             <Route
               element={
-                <PriviteRoute>
                   <HomePage />
-                </PriviteRoute>
+                
               }
               path="/"
               exact
             />
             <Route element={<LoginPage />} path="/login" />
+            <Route element={<CentersPage />} path='/centers' />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
@@ -12,8 +12,10 @@ export const AuthProvider = ({children})=>{
 
     let [user, setUser] = useState(() =>localStorage.getItem('authToken')?jwt_decode(localStorage.getItem('authToken')):null);
     let [authToken, setAuthToken] = useState(()=>localStorage.getItem('authToken')?JSON.parse(localStorage.getItem('authToken')):null);
+    let [loading, setLoading] = useState(true);
 
     let loginUser = async (e )=>{
+        
         e.preventDefault();
         let responce = await fetch('/api/token/', {
             method:'POST',
@@ -43,11 +45,42 @@ export const AuthProvider = ({children})=>{
             navigator('/login')
         }
 
+        let updateToken = async () => {
+            console.log("updateToken")
+            let responce = await fetch('/api/token/refresh/', {
+                method:'POST',
+                headers: {
+                    'Accept': 'application/json',
+            'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({refresh:authToken.refresh})
+            });
+            let data = await responce.json();
+            if(responce.status === 200){
+                setAuthToken(data);
+            setUser(jwt_decode(data.access));
+            localStorage.setItem('authToken', JSON.stringify(data));
+
+            }else{
+                logoutUser()
+            }
+        }
+
     let contextdata = {
         user:user,
         loginUser:loginUser,
         logoutUser:logoutUser,
     }
+
+    useEffect(()=>{
+        let forminutes = 1000 * 60 * 4;
+        let interval = setInterval(()=>{
+            if(authToken){
+                updateToken();
+            }
+        }, forminutes)
+        return () => clearInterval(interval)
+    },[authToken, loading])
 
     return(
         <AuthContext.Provider value={contextdata}>
