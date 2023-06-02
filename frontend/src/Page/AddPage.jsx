@@ -65,7 +65,7 @@ useEffect(()=>{
   },[])
 
   return (
-    <div className='w-screen h-screen overflow-hidden'><NavBar />
+    <div className='w-screen h-screen'><NavBar />
     <Success open={open} handleopen={setOpen} />
     <div className='w-full h-full flex '>
     <div className='m-auto'>
