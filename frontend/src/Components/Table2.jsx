@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, PlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
@@ -16,26 +16,27 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import AuthContext from "../Contex/AuthContex";
  
 const TABS = [
   {
-    label: "Name",
-    value: "center_name",
+    label: "User",
+    value: "user",
   },
   {
-    label: "StartDate",
-    value: "starting_date",
+    label: "Date",
+    value: "date",
   },
   {
-    label: "EndDate",
-    value: "end_date",
+    label: "Slot",
+    value: "slotNumber",
   },
 ];
  
-const TABLE_HEAD = ["Name", "StartDate", "EndDate", "Creater", ""];
-// ['center_name', 'starting_date', 'end_date', 'created_by' , 'creater_name']
+const TABLE_HEAD = ["User", "Date", "Slot", ];
+// [ 'date', 'slotNumber', 'user']
  
 const TABLE_ROWS = [
   {
@@ -50,20 +51,25 @@ const TABLE_ROWS = [
   
 ];
  
-export default function Table() {
+export default function Table2() {
     let [table, setTable]= useState(null);
-    let [search, setSearch]= useState("");
-    let [order, setOrder]= useState("center_name");
+    let [order, setOrder]= useState("date");
+    const [searchParams] = useSearchParams();
     let navigate = useNavigate();
+    let center = searchParams.get('center').replace('"', '').replace('"', '');
+    
+  const {authToken} = useContext(AuthContext);
     
     let updateTable = async ()=>{
-        let responce = await fetch('/api/centers/search/', {
+        let responce = await fetch('/api/centers/slot/booked/', {
             method:'POST',
             headers: {
                 'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        
+    'Authorization': 'Bearer '+String(authToken.access)
             },
-            body: JSON.stringify({search:search, order:order})
+            body: JSON.stringify({center_name:center, order:order})
         });
         let data = await responce.json();
         console.log(data);
@@ -76,7 +82,7 @@ export default function Table() {
     useEffect(()=>{
        updateTable();
        
-    },[search,order]);
+    },[order]);
 
   return (
     <Card className="h-full w-full">
@@ -91,10 +97,9 @@ export default function Table() {
             </Typography>
           </div>
           
-
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="center_name" className="w-full md:w-max">
+          <Tabs value="date" className="w-full md:w-max">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
                 <Tab key={value} onClick={(e)=>{TABS.map(({label, value})=>{
@@ -108,11 +113,7 @@ export default function Table() {
               ))}
             </TabsHeader>
           </Tabs>
-          <div className="w-full md:w-72">
-            <Input label="Search" onChange={(e)=>{
-                setSearch(e.currentTarget.value)
-            }} icon={<MagnifyingGlassIcon className="h-5 w-5" />} />
-          </div>
+         
         </div>
       </CardHeader>
       <CardBody className="overflow-scroll px-0">
@@ -133,18 +134,18 @@ export default function Table() {
             </tr>
           </thead>
           <tbody>
-            {table&&table.map(({ img, center_name, starting_date, creater_name, end_date, date }, index) => {
+            {table&&table.map(({  date, slotNumber, user }, index) => {
               const isLast = index === table.length - 1;
               const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
  
               return (
                 
-                <tr key={center_name}>
+                <tr key={user}>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
                       <div className="flex flex-col">
                         <Typography variant="small" color="blue-gray" className="font-normal">
-                          {center_name}
+                          {user}
                         </Typography>
                        
                       </div>
@@ -153,32 +154,17 @@ export default function Table() {
                   <td className={classes}>
                     <div className="flex flex-col">
                       <Typography variant="small" color="blue-gray" className="font-normal">
-                        {starting_date}
+                        {date}
                       </Typography>
                       
                     </div>
                   </td>
                   <td className={classes}>
                     <div className="w-max">
-                      {end_date}
+                      {slotNumber}
                     </div>
                   </td>
-                  <td className={classes}>
-                    <Typography variant="small" color="blue-gray" className="font-normal">
-                      {creater_name}
-                    </Typography>
-                  </td>
-                  
-                  <td className={classes}>
-                    <Tooltip content="Book Slot">
-                      <IconButton variant="text" onClick={()=>{navigate('/booking?center="'+center_name+'"')}} color="blue-gray">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-</svg>
-
-                      </IconButton>
-                    </Tooltip>
-                  </td>
+                 
                 </tr>
               );
             })}

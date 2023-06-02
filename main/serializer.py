@@ -8,6 +8,7 @@ class VaccinationCenterSerializer(serializers.ModelSerializer):
         fields = ['center_name', 'starting_date', 'end_date', 'created_by' , 'creater_name']
         
 class VaccinationSlotSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source = 'user.username')
     class Meta:
         model = VaccinationSlot
-        fields = ['center_name', 'date', 'slotNumber', 'user']
+        fields = [ 'date', 'slotNumber', 'user']

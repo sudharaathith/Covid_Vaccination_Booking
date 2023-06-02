@@ -92,8 +92,8 @@ export default function Table1() {
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             
-            <Button className="flex items-center gap-3" color="blue" size="sm">
-              <PlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+            <Button onClick={()=>navigate('/add')} className="flex items-center gap-3" color="blue" size="sm">
+              <PlusIcon strokeWidth={2} className="h-4 w-4" /> Add Center
             </Button>
           </div>
         </div>
@@ -173,8 +173,8 @@ export default function Table1() {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Tooltip content="Edit User">
-                      <IconButton variant="text" onClick={()=>{navigate('/booking?center="'+center_name+'"')}} color="blue-gray">
+                    <Tooltip content="See Slots">
+                      <IconButton variant="text" onClick={()=>{navigate('/slot?center="'+center_name+'"')}} color="blue-gray">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
 </svg>

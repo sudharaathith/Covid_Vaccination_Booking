@@ -72,7 +72,9 @@ body: JSON.stringify({center_name:center, slot:s, date:date})
 console.log(`Bearer ${String(authToken.access)}`);
     if(responce.status === 200){
        setOpen(true);
-       navigator('/centers')
+        setTimeout(() => {
+            navigator('/centers')
+        }, 1500);
     }else{
         alert("something went wrong")
     }

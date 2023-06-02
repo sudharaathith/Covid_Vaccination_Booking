@@ -39,9 +39,12 @@ def searchCenters(request):
 @permission_classes([IsAdminUser, IsAuthenticated])
 def addCenter(request):
     try:
-        service.addCenter(request.data+{'created_by':request.user})
+        post = request.data
+        post['user'] = request.user
+        service.addCenter(post)
         return Response(status=200)
-    except:
+    except Exception as e:
+        print(e)
         return Response(status=500)
     
 @api_view(['POST'])
@@ -60,3 +63,9 @@ def BookSlot(request):
     except Exception as e:
         print(e)
         return Response(status=500)
+    
+    
+@api_view(['POST'])
+@permission_classes([IsAdminUser, IsAuthenticated])
+def getBookedSlots(request):
+    return Response(service.GetBookedSlot(request.data))

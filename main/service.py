@@ -3,8 +3,7 @@ from .models import *
 import datetime
 from dateutil import parser
 
-def getdate(date):
-    return datetime(date[0],date[1],date[2])
+
 
 def searchCenter(post):
     search = post['search']
@@ -26,9 +25,12 @@ def searchCenter(post):
 
 def addCenter(post):
     center_name = post['center_name']
-    starting_date = getdate(post['starting_date'])
-    end_date = getdate(post['end_date'])
-    created_by = post['created_by']
+    starting_date = parser.parse(post['starting_date'])
+    end_date = parser.parse(post['end_date'])
+    if (starting_date>end_date):
+        raise Exception('Invalid starting date')
+    
+    created_by = post['user']
     v = VaccinationCenter.objects.create(
         center_name=center_name,
         starting_date=starting_date,
@@ -70,6 +72,25 @@ def bookSlots(post):
             return
     
     raise Exception("Somthing failed")
+
+def GetBookedSlot(post):
+    center_name = post['center_name']
+    order = post.get('order')
+    user = post.get('user')
+    reverse = post.get('reverse')
+    r = VaccinationCenter.objects.get(center_name=center_name)
+    v = VaccinationSlot.objects.filter(center= r)
+    if order in ['date', 'slotNumber', 'user']:
+        v = v.order_by(order)
+    if user:
+        u = User.objects.filter(username=user)
+        print(u[0])
+        if u.exists():
+            v = v.filter(created_by=u[0])
+    if reverse:
+        if reverse.lower() == "true":
+            v =v.reverse()
+    return VaccinationSlotSerializer(v,many=True).data
             
             
             

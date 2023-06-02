@@ -29,33 +29,33 @@ import DatePicker from '../Components/DatePicker';
 
 const AddPage = () => {
   const [type, setType] = React.useState("card");
-  const [slot, setSlot] = React.useState({lodaing:"lodaing"});
-  const [date, setDate] = React.useState("");
-  const [searchParams] = useSearchParams();
+  const [start, setStart] = React.useState(null);
+  const [end, setEnd] = React.useState(null);
+  const [center, setCenter] = React.useState(null);
   const {authToken} = useContext(AuthContext);
-  const [s, setS] = useState("")
   const [open, setOpen] = useState(false);
-  let center = 'anna'
   let navigator = useNavigate();
 
 
 
 
-let bookSlot = async ()=>{
+let saveCenter = async ()=>{
     console.log('Updating');
-    let responce = await fetch('/api/centers/slot/book/', {
-        method:'POST',
+    let responce = await fetch('/api/centers/add/', {
+        method:'PUT',
         headers: {
             'Accept': 'application/json',
     'Content-Type': 'application/json',
     'Authorization': 'Bearer '+String(authToken.access)
 },
-body: JSON.stringify({center_name:center, slot:s, date:date})
+body: JSON.stringify({center_name:center, starting_date:start, end_date:end})
 });
 console.log(`Bearer ${String(authToken.access)}`);
     if(responce.status === 200){
        setOpen(true);
-       navigator('/centers')
+       setTimeout(() => {
+        navigator('/editor')
+    }, 1500);
     }else{
         alert("something went wrong")
     }
@@ -114,7 +114,7 @@ animate={{
                   >
 Center Name
 </Typography>
-<Input label='Center Name'/>
+<Input onChange={(e)=>{setCenter(e.target.value)}} label='Center Name'/>
 </div>
  
                 <div className="my-6">
@@ -125,11 +125,11 @@ Center Name
                   >
                     Date
                   </Typography>
-                  <DatePicker label="Start date" />
-                  <DatePicker label="End date" className="mt-3" />
+                  <DatePicker onChange={(e)=>{setStart(e.target.value)}} label="Start date" />
+                  <DatePicker onChange={(e)=>{setEnd(e.target.value)}} label="End date" className="mt-3" />
                   
                 </div>
-                <Button size="lg" onClick={bookSlot}>Save</Button>
+                <Button size="lg" onClick={saveCenter}>Save</Button>
                 
               </form>
             </TabPanel>
