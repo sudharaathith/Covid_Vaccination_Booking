@@ -30,8 +30,10 @@ export const AuthProvider = ({children})=>{
         if(responce.status === 200){
             setAuthToken(data);
             setUser(jwt_decode(data.access));
+            let u = jwt_decode(data.access)
             localStorage.setItem('authToken', JSON.stringify(data));
-            navigator('/')
+            
+            navigator((u.is_superuser)?'/editor':'/')
         }else{
             alert("something went wrong")
         }

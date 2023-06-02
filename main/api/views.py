@@ -69,3 +69,12 @@ def BookSlot(request):
 @permission_classes([IsAdminUser, IsAuthenticated])
 def getBookedSlots(request):
     return Response(service.GetBookedSlot(request.data))
+
+@api_view(['POST'])
+def signUp(request):
+    print(request.data)
+    res= service.Signup(request.data)
+    if 200==res:
+        return Response(status=res)
+    else:
+        return Response(status=500, data={"data":res})

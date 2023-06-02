@@ -6,8 +6,10 @@ import {
 
 import vaccimg from '../Static/illustration-humanitarian-help-concept_23-2148502133.webp'
 import NavBar from '../Components/NavBar';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  let nav = useNavigate();
   return (
     <div className='w-screen h-screen overflow-hidden'>
       <NavBar />
@@ -33,7 +35,7 @@ const HomePage = () => {
           Defend your Future🛡️
 
       </Typography>
-      <Button className='mt-40'>Book Your Slot</Button>
+      <Button onClick={()=>nav('/centers')} className='mt-40'>Book Your Slot</Button>
     </div>
     </div>
       </div>

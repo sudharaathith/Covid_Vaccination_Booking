@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Navbar,
   MobileNav,
@@ -6,9 +6,11 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
+import AuthContext from "../Contex/AuthContex";
  
 export default function NavBar() {
   const [openNav, setOpenNav] = React.useState(false);
+  let {user, logoutUser} = useContext(AuthContext);
  
   React.useEffect(() => {
     window.addEventListener(
@@ -26,7 +28,7 @@ export default function NavBar() {
         color="blue-gray"
         className="p-1 font-normal hover:text-blue-400"
       >
-        <a href="/" className="flex items-center">
+        <a  href="/" className="flex items-center">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
   <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clip-rule="evenodd" />
 </svg>
@@ -48,7 +50,22 @@ Home
           Centers
         </a>
       </Typography>
-      <Typography
+      {(user)?<Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal hover:text-blue-400"
+      >
+        <a onClick={logoutUser} className="flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm5.03 4.72a.75.75 0 010 1.06l-1.72 1.72h10.94a.75.75 0 010 1.5H10.81l1.72 1.72a.75.75 0 11-1.06 1.06l-3-3a.75.75 0 010-1.06l3-3a.75.75 0 011.06 0z" clip-rule="evenodd" />
+</svg>
+
+
+
+          LogOut
+        </a>
+      </Typography>:<Typography
         as="li"
         variant="small"
         color="blue-gray"
@@ -63,7 +80,7 @@ Home
 
           Login
         </a>
-      </Typography>
+      </Typography>}
 
     </ul>
   );

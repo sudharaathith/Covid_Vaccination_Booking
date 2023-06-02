@@ -10,7 +10,7 @@ const PriviteRoute = ({children , ...rest})=>{
 
 export const AdminRoute = ({children, ...rest})=>{
     let {user} = useContext(AuthContext);
-    return <PriviteRoute>{(user.is_superuser)?children:<Navigate to='/' />}</PriviteRoute>
+    return <PriviteRoute>{(user&&user.is_superuser)?children:<Navigate to='/' />}</PriviteRoute>
 }
 
 export default PriviteRoute

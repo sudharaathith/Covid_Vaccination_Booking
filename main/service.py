@@ -2,6 +2,7 @@ from .serializer import *
 from .models import *
 import datetime
 from dateutil import parser
+from django.contrib.auth.models import User
 
 
 
@@ -92,7 +93,19 @@ def GetBookedSlot(post):
             v =v.reverse()
     return VaccinationSlotSerializer(v,many=True).data
             
-            
+def Signup(post):
+    try:
+        username = post['username']
+        password = post['password']
+        email = post['email']
+        
+        User.objects.create(username=username, password=password, email=email).save()
+        return 200
+    except Exception as e:
+        print(e)
+        return e
+        
+                    
             
         
     

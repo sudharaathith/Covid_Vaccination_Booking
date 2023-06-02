@@ -12,5 +12,6 @@ urlpatterns = [
     path('centers/add/', views.addCenter),
     path('centers/slot/avilable/', views.getSlotAvilable),
     path('centers/slot/book/', views.BookSlot),
-    path('centers/slot/booked/', views.getBookedSlots)
+    path('centers/slot/booked/', views.getBookedSlots),
+    path('signup/', views.signUp)
 ]

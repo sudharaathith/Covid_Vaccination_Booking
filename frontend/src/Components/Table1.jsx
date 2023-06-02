@@ -84,7 +84,7 @@ export default function Table1() {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Centers list
+              Centers list Editor
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
               See information about all Centers
@@ -137,7 +137,7 @@ export default function Table1() {
             </tr>
           </thead>
           <tbody>
-            {table&&table.map(({ img, center_name, starting_date, org, end_date, date }, index) => {
+            {table&&table.map(({ img, center_name, starting_date, creater_name, end_date }, index) => {
               const isLast = index === table.length - 1;
               const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
  
@@ -169,7 +169,7 @@ export default function Table1() {
                   </td>
                   <td className={classes}>
                     <Typography variant="small" color="blue-gray" className="font-normal">
-                      {date}
+                      {creater_name}
                     </Typography>
                   </td>
                   <td className={classes}>
