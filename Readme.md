@@ -1,11 +1,11 @@
 # Covid Vaccination Booking
 
-## Instalaltion
-I have provided scripting file for installing dependency for this project.
+## Installation
+I have provided scripting files for installing the dependencies for this project:
 - setup.sh (Linux)
 - setup.bat (Windows)
 
-### manual Installation
+### Manual Installation
 
 ```bash
 pip install virtualenv
@@ -13,35 +13,37 @@ virtualenv env
 source ./env/bin/activate
 ```
 
-
-to install, create and run the virtual enviroment if needed
+To install, create and run the virtual environment if needed.
 
 ```bash
 pip install -r requirements.txt
 ```
-to install required Libeary. (python should be at 3.8 or above.)
+
+To install the required libraries. (Python should be version 3.8 or above.)
+
 ```bash
 python manage.py runserver
 ```
-to run the django framework
 
-NOTE: Python should already be installed and Python version should be 3.8 or above.
+To run the Django framework.
 
-## Tecstack
+NOTE: Python should already be installed, and the Python version should be 3.8 or above.
+
+## Tech Stack
 ### Django
-  I have used Django as my backend.  Along with DjangoREST Framework, JWT Token
+I have used Django as the backend along with Django REST Framework and JWT Token.
 ### React
-  I have used React as my Frontend.  Along with Tailwind CSS and Material Tailwind.
+I have used React as the frontend along with Tailwind CSS and Material Tailwind.
 
 ## Backend
 
-My API paths are 
+The API paths are as follows:
  ```python
  "api/token/"
  "api/token/refresh/"
  "api/centers/search/"
  "api/centers/add/"
- "api/centers/slot/avilable/"
+ "api/centers/slot/available/"
  "api/centers/slot/book/"
  "api/centers/slot/booked/"
  "api/signup/"
@@ -49,86 +51,92 @@ My API paths are
  
  
  ### ```api/token/```
- A POST API to get access token and refresh token by sending Username and Password.
+ A POST API to get an access token and refresh token by sending the Username and Password.
  
  Example:
  ```json 
  {
-    "username":"admin",
-    "passwoed":"admin"
+    "username": "admin",
+    "password": "admin"
  } 
  ```
   
  
  ### ```api/token/refresh/```
- A POST API to get new access token by sending refesh token.
+ A POST API to get a new access token by sending the refresh token.
  
  Example:
  ```json 
  {
-    "refresh":"sdfjlshksdajljlskjlflasljsffl;asfjchvselfhekeajksdh"
+    "refresh": "sdfjlshksdajljlskjlflasljsffl;asfjchvselfhekeajksdh"
  } 
  ```
   
  
   ### ```api/centers/search/```
- A POST API to get the Vaccination center name by sending search parameater and order by parameater if needed
+ A POST API to get the vaccination center name by sending the search parameter and order by parameter if needed.
  
  Example:
  ```json 
  {
-    "search":"summa",
-    "order":"name"
+    "search": "summa",
+    "order": "name"
  } 
  ```
  
  
    ### ```api/centers/add/```
- A PUT API to add the Vaccination center by sending required Details.[Authencation, superuserpermisson]
+ A PUT API to add the vaccination center by sending the required details. [Authentication, superuser permission]
  
  Example:
  ```json 
  {
-    "center_name":"summa dhaan",
-    "starting_date":"1-2-2023",
-    "end_date":"2-3-2023"
+    "center_name": "summa dhaan",
+    "starting_date": "1-2-2023",
+    "end_date": "2-3-2023"
  } 
  ```
   
  
-   ### ```api/centers/slot/avilable/```
- A POST API to find the Avaliable Vaccination slot for a center.[Authencation]
+   ### ```api/centers/slot/available/```
+ A POST API to find the available vaccination slots for a center. [Authentication]
  
  Example:
  ```json 
  {
-    "center_name":"summa"
+    "center_name": "summa"
  } 
  ```
   
  
    ### ```api/centers/slot/booked/```
- A POST API to find the Booked Vaccination slot for a center and user datails.[Authencation, superuserpermisson]
+ A POST API to find the booked vaccination slots for a center and user details. [Authentication, superuser permission]
  
  Example:
  ```json 
  {
-    "center_name":"summa"
+    "center_name": "summa"
  } 
  ```
   
  
   ### ```api/signup/```
- A POST API to create a new user.[Authencation, superuserpermisson]
+ A POST API to create a new user. [Authentication, superuser permission]
  
  Example:
  ```json 
  {
-    "username":"summa",
-    "password":"0",
-    "date":"1-2-2023"
+    "username": "summa",
+    "password": "0",
+    "date": "1-2-2023"
  } 
  ```
+
+
+
+
+## Frontend
+
 
   
   
