@@ -99,7 +99,9 @@ def Signup(post):
         password = post['password']
         email = post['email']
         
-        User.objects.create(username=username, password=password, email=email).save()
+        u = User.objects.create(username=username, email=email)
+        u.set_password(password)
+        u.save()
         return 200
     except Exception as e:
         print(e)
