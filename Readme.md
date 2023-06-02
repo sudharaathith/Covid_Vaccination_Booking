@@ -137,6 +137,28 @@ The API paths are as follows:
 
 ## Frontend
 
+The Pages are as follow
+
+- Home Page
+- Centers Page
+- Login Page
+- Signup Page
+- Booking Page
+- Admin Centers Page
+- Add Centers Page
+- Centers Details Page
+
+### Home Page
+
+![image](https://github.com/sudharaathith/Covid_Vaccination_Booking/assets/98890534/f7e1357e-faa6-4028-af1c-5709c8d7b850)
+The First Page of the Website
+
+### Centers Page
+
+![image](https://github.com/sudharaathith/Covid_Vaccination_Booking/assets/98890534/ffb1f941-957e-418c-94c2-63703c774928)
+Page to Find Centers. it has a search bar and Three type of order by options.
+
+### 
 
   
   
