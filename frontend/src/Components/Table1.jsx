@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, PlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
@@ -50,7 +50,7 @@ const TABLE_ROWS = [
   
 ];
  
-export default function Table() {
+export default function Table1() {
     let [table, setTable]= useState(null);
     let [search, setSearch]= useState("");
     let [order, setOrder]= useState("center_name");
@@ -90,8 +90,12 @@ export default function Table() {
               See information about all Centers
             </Typography>
           </div>
-          
-
+          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+            
+            <Button className="flex items-center gap-3" color="blue" size="sm">
+              <PlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+            </Button>
+          </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="center_name" className="w-full md:w-max">

@@ -10,4 +10,6 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('centers/search/', views.searchCenters),
     path('centers/add/', views.addCenter),
+    path('centers/slot/avilable/', views.getSlotAvilable),
+    path('centers/slot/book/', views.BookSlot),
 ]

@@ -13,7 +13,7 @@ class VaccinationCenter(models.Model):
         return self.center_name
     
 class VaccinationSlot(models.Model):
-    center = models.OneToOneField(VaccinationCenter, on_delete=models.CASCADE, unique=True)
+    center = models.ForeignKey(VaccinationCenter, on_delete=models.CASCADE, unique=False)
     date = models.DateField()
     slotNumber = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)

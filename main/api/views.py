@@ -13,6 +13,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add custom claims
         token['username'] = user.username
+        token['is_superuser'] = user.is_superuser
         # ...
 
         return token
@@ -41,4 +42,21 @@ def addCenter(request):
         service.addCenter(request.data+{'created_by':request.user})
         return Response(status=200)
     except:
+        return Response(status=500)
+    
+@api_view(['POST'])
+def getSlotAvilable(request):
+    res = service.getSlotAvilable(request.data)
+    return Response(res)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def BookSlot(request):
+    try:
+        post = request.data
+        post['user'] = request.user
+        service.bookSlots(post)
+        return Response(status=200)
+    except Exception as e:
+        print(e)
         return Response(status=500)

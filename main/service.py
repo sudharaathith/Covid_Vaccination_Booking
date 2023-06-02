@@ -1,6 +1,7 @@
 from .serializer import *
 from .models import *
-from datetime import datetime
+import datetime
+from dateutil import parser
 
 def getdate(date):
     return datetime(date[0],date[1],date[2])
@@ -18,8 +19,9 @@ def searchCenter(post):
         print(u[0])
         if u.exists():
             v = v.filter(created_by=u[0])
-    if reverse.lower() == "true":
-        v =v.reverse()
+    if reverse:
+        if reverse.lower() == "true":
+            v =v.reverse()
     return VaccinationCenterSerializer(v,many=True).data
 
 def addCenter(post):
@@ -34,4 +36,42 @@ def addCenter(post):
         created_by=created_by,
                                      )
     v.save()
+    
+def getSlotAvilable(post):
+    center_name = post['center_name']
+    v = VaccinationCenter.objects.get(center_name=center_name)
+    start = v.starting_date
+    end = v.end_date
+    datebw = [start + datetime.timedelta(days=x) for x in range((end-start).days + 1)]
+    res = {}
+    for i in datebw:
+        slot = [i for i in range(10)]
+        val = VaccinationSlot.objects.filter(date = i, center=v)
+        print(val)
+        for j in val:
+            slot.remove(j.slotNumber)
+        res[str(i)] = slot
+    return res
+
+def bookSlots(post):
+    date = post['date']
+    slot = post['slot']
+    avalible = getSlotAvilable(post)
+    s = avalible.get(date)
+    print(slot)
+    if s != None:
+        if (slot) in s:
+            user = post['user']
+            center_name = post['center_name']
+            v = VaccinationCenter.objects.get(center_name=center_name)
+            a =VaccinationSlot.objects.create(user=user, center=v, date=parser.parse(date), slotNumber=int(slot))
+            a.save()
+            print(a)
+            return
+    
+    raise Exception("Somthing failed")
+            
+            
+            
+        
     
